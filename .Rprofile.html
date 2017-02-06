@@ -163,7 +163,7 @@ $(document).ready(function () {
 </style>
 <script>
 $(document).ready(function () {
-  window.initializeCodeFolding("show" === "show");
+  window.initializeCodeFolding("hide" === "show");
 });
 </script>
 
@@ -221,21 +221,13 @@ $(document).ready(function () {
 </div>
 
 
-<div id="wrangle-data" class="section level1 tabset tabset-sticky">
-<h1>Wrangle data</h1>
-<pre class="r"><code>source(&quot;0_helpers.R&quot;)</code></pre>
-<div id="wrangle-wrangle" class="section level2">
-<h2>Wrangle wrangle</h2>
-<pre class="r"><code>data(&quot;msleep&quot;)
-msleep %&gt;% 
-    mutate(eats = factor(recode(vore, &quot;carni&quot; = &quot;meat&quot;, &quot;omni&quot; = &quot;everything&quot;, &quot;herbi&quot; = &quot;plants&quot;, &quot;insecti&quot; = &quot;insects&quot;), c(&quot;everything&quot;,&quot;plants&quot;, &quot;insects&quot;, &quot;meat&quot;))) -&gt;
-msleep</code></pre>
-</div>
-<div id="save-data" class="section level2">
-<h2>Save data</h2>
-<pre class="r"><code>saveRDS(msleep, file = &quot;msleep_processed.rds&quot;)</code></pre>
-</div>
-</div>
+<pre class="r"><code># `.Rprofile`</code></pre>
+<p>allow duplicate chunk labels in knitr, useful for knit_child</p>
+<pre class="r"><code>options(knitr.duplicate.label = &#39;allow&#39;)
+
+#### -- Packrat Autoloader (version 0.4.8-1) -- ####
+source(&quot;packrat/init.R&quot;)
+#### -- End Packrat Autoloader -- ####</code></pre>
 
 
 

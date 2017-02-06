@@ -228,10 +228,16 @@ $(document).ready(function () {
 <h2>Load data</h2>
 <pre class="r"><code>msleep = readRDS(&quot;msleep_processed.rds&quot;)</code></pre>
 </div>
-<div id="basic-model" class="section level2">
+<div id="basic-model" class="section level2 tabset tabset-sticky">
 <h2>Basic model</h2>
 <pre class="r"><code>m1 = lm(sleep_rem ~ sleep_total, data = msleep)
-summary(m1)</code></pre>
+regression_summary(m1)</code></pre>
+<pre class="r"><code>if (!exists(&quot;indent&quot;)) {
+    indent = &#39;##&#39; # ugly hack so _regression_summary can be &quot;spun&quot; (variables included via `r ` have to be available)
+}</code></pre>
+<div id="summary" class="section level3">
+<h3>Summary</h3>
+<pre class="r"><code>summary(model)</code></pre>
 <table style="width:86%;">
 <colgroup>
 <col width="25%" />
@@ -292,15 +298,30 @@ summary(m1)</code></pre>
 </tbody>
 </table>
 </div>
+<div id="marginal-effect-plot" class="section level3">
+<h3>Marginal effect plot</h3>
+<pre class="r"><code>plot(allEffects(model))</code></pre>
+<p><img src="3_analyses_files/figure-html/unnamed-chunk-7-1.svg" width="672" /></p>
+</div>
+<div id="diagnostics" class="section level3">
+<h3>Diagnostics</h3>
+<pre class="r"><code>plot(model)</code></pre>
+<p><img src="3_analyses_files/figure-html/unnamed-chunk-8-1.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-8-2.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-8-3.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-8-4.svg" width="672" /></p>
+</div>
+</div>
 <div id="super-advanced-model" class="section level2 active tabset tabset-sticky">
 <h2>Super-advanced model</h2>
-<div id="summary" class="section level3">
+<pre class="r"><code>m2 = lm(sleep_rem ~ sleep_total + log(brainwt) + log(bodywt) + eats, data = msleep)
+regression_summary(m2)</code></pre>
+<pre class="r"><code>if (!exists(&quot;indent&quot;)) {
+    indent = &#39;##&#39; # ugly hack so _regression_summary can be &quot;spun&quot; (variables included via `r ` have to be available)
+}</code></pre>
+<div id="summary-1" class="section level3">
 <h3>Summary</h3>
-<pre class="r"><code>m2 = lm(sleep_rem ~ sleep_total + brainwt + bodywt + eats, data = msleep)
-summary(m2)</code></pre>
-<table style="width:86%;">
+<pre class="r"><code>summary(model)</code></pre>
+<table style="width:88%;">
 <colgroup>
-<col width="25%" />
+<col width="26%" />
 <col width="15%" />
 <col width="18%" />
 <col width="13%" />
@@ -318,57 +339,57 @@ summary(m2)</code></pre>
 <tbody>
 <tr class="odd">
 <td align="center"><strong>sleep_total</strong></td>
-<td align="center">0.1797</td>
-<td align="center">0.03988</td>
-<td align="center">4.507</td>
-<td align="center">0.00006702</td>
+<td align="center">0.1879</td>
+<td align="center">0.03814</td>
+<td align="center">4.926</td>
+<td align="center">0.00001886</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>brainwt</strong></td>
-<td align="center">0.07156</td>
-<td align="center">0.6849</td>
-<td align="center">0.1045</td>
-<td align="center">0.9174</td>
+<td align="center"><strong>log(brainwt)</strong></td>
+<td align="center">-0.3747</td>
+<td align="center">0.1946</td>
+<td align="center">-1.926</td>
+<td align="center">0.06203</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>bodywt</strong></td>
-<td align="center">0.0009394</td>
-<td align="center">0.001406</td>
-<td align="center">0.6679</td>
-<td align="center">0.5084</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>eatsinsects</strong></td>
-<td align="center">0.5301</td>
-<td align="center">0.5218</td>
-<td align="center">1.016</td>
-<td align="center">0.3165</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>eatsmeat</strong></td>
-<td align="center">0.5011</td>
-<td align="center">0.4113</td>
-<td align="center">1.218</td>
-<td align="center">0.231</td>
+<td align="center"><strong>log(bodywt)</strong></td>
+<td align="center">0.3648</td>
+<td align="center">0.1527</td>
+<td align="center">2.39</td>
+<td align="center">0.02223</td>
 </tr>
 <tr class="even">
 <td align="center"><strong>eatsplants</strong></td>
-<td align="center">-0.3516</td>
-<td align="center">0.3356</td>
-<td align="center">-1.048</td>
-<td align="center">0.3017</td>
+<td align="center">-0.5707</td>
+<td align="center">0.3218</td>
+<td align="center">-1.773</td>
+<td align="center">0.08464</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>eatsinsects</strong></td>
+<td align="center">0.3757</td>
+<td align="center">0.486</td>
+<td align="center">0.7731</td>
+<td align="center">0.4445</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>eatsmeat</strong></td>
+<td align="center">0.2837</td>
+<td align="center">0.3864</td>
+<td align="center">0.7344</td>
+<td align="center">0.4675</td>
 </tr>
 <tr class="odd">
 <td align="center"><strong>(Intercept)</strong></td>
-<td align="center">0.009001</td>
-<td align="center">0.5235</td>
-<td align="center">0.01719</td>
-<td align="center">0.9864</td>
+<td align="center">-1.731</td>
+<td align="center">0.9195</td>
+<td align="center">-1.883</td>
+<td align="center">0.06787</td>
 </tr>
 </tbody>
 </table>
 <table style="width:85%;">
-<caption>Fitting linear model: sleep_rem ~ sleep_total + brainwt + bodywt + eats</caption>
+<caption>Fitting linear model: sleep_rem ~ sleep_total + log(brainwt) + log(bodywt) + eats</caption>
 <colgroup>
 <col width="20%" />
 <col width="30%" />
@@ -386,17 +407,22 @@ summary(m2)</code></pre>
 <tbody>
 <tr class="odd">
 <td align="center">43</td>
-<td align="center">0.8574</td>
-<td align="center">0.5802</td>
-<td align="center">0.5103</td>
+<td align="center">0.7932</td>
+<td align="center">0.6408</td>
+<td align="center">0.5809</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="diagnostics" class="section level3">
+<div id="marginal-effect-plot-1" class="section level3">
+<h3>Marginal effect plot</h3>
+<pre class="r"><code>plot(allEffects(model))</code></pre>
+<p><img src="3_analyses_files/figure-html/unnamed-chunk-11-1.svg" width="672" /></p>
+</div>
+<div id="diagnostics-1" class="section level3">
 <h3>Diagnostics</h3>
-<pre class="r"><code>plot(m2)</code></pre>
-<p><img src="3_analyses_files/figure-html/unnamed-chunk-5-1.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-5-2.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-5-3.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-5-4.svg" width="672" /></p>
+<pre class="r"><code>plot(model)</code></pre>
+<p><img src="3_analyses_files/figure-html/unnamed-chunk-12-1.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-12-2.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-12-3.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-12-4.svg" width="672" /></p>
 </div>
 </div>
 </div>

@@ -163,7 +163,7 @@ $(document).ready(function () {
 </style>
 <script>
 $(document).ready(function () {
-  window.initializeCodeFolding("show" === "show");
+  window.initializeCodeFolding("hide" === "show");
 });
 </script>
 
@@ -221,19 +221,93 @@ $(document).ready(function () {
 </div>
 
 
-<div id="wrangle-data" class="section level1 tabset tabset-sticky">
-<h1>Wrangle data</h1>
-<pre class="r"><code>source(&quot;0_helpers.R&quot;)</code></pre>
-<div id="wrangle-wrangle" class="section level2">
-<h2>Wrangle wrangle</h2>
-<pre class="r"><code>data(&quot;msleep&quot;)
-msleep %&gt;% 
-    mutate(eats = factor(recode(vore, &quot;carni&quot; = &quot;meat&quot;, &quot;omni&quot; = &quot;everything&quot;, &quot;herbi&quot; = &quot;plants&quot;, &quot;insecti&quot; = &quot;insects&quot;), c(&quot;everything&quot;,&quot;plants&quot;, &quot;insects&quot;, &quot;meat&quot;))) -&gt;
-msleep</code></pre>
+<div id="helper-functions-used-throughout" class="section level1 tab-content">
+<h1>Helper functions used throughout</h1>
+<p>documentation on the functions is interspersed through code comments</p>
+<div id="set-some-options" class="section level2">
+<h2>set some options</h2>
+<p>dont show messages when loading libraries</p>
+<pre class="r"><code># library = function(...) suppressMessages(base::library(...))</code></pre>
+<p>never set strings as factors automatically (google for reason why)</p>
+<pre class="r"><code>options(stringsAsFactors = FALSE)</code></pre>
+<p>show four significant digits tops</p>
+<pre class="r"><code>options(digits = 4)</code></pre>
+<p>tend not to show scientific notation</p>
+<pre class="r"><code>options(scipen = 7)</code></pre>
+<p>make output a bit wider</p>
+<pre class="r"><code>options(width = 110)</code></pre>
 </div>
-<div id="save-data" class="section level2">
-<h2>Save data</h2>
-<pre class="r"><code>saveRDS(msleep, file = &quot;msleep_processed.rds&quot;)</code></pre>
+<div id="load-packages" class="section level2">
+<h2>Load packages</h2>
+<p>generate the site</p>
+<pre class="r"><code>library(rmarkdown)</code></pre>
+<p>set options for chunks</p>
+<pre class="r"><code>library(knitr)</code></pre>
+<p>my formr utility package to generate e.g. the bibliography</p>
+<pre class="r"><code>library(formr)</code></pre>
+<p>pretty-printed output</p>
+<pre class="r"><code>library(pander)</code></pre>
+<p>tidyverse date times</p>
+<pre class="r"><code>library(lubridate)</code></pre>
+<p>tidyverse strings</p>
+<pre class="r"><code>library(stringr)</code></pre>
+<p>extractor functions for models</p>
+<pre class="r"><code>library(broom)</code></pre>
+<p>marginal effects plots for regressions</p>
+<pre class="r"><code>library(effects)</code></pre>
+<p>grammar of graphics plots</p>
+<pre class="r"><code>library(ggplot2)</code></pre>
+<p>tidyverse: transform data wide to long</p>
+<pre class="r"><code>library(tidyr)</code></pre>
+<p>svg graphs</p>
+<pre class="r"><code>library(svglite);</code></pre>
+<p>tidyverse-style data wrangling. has a lot of naming conflicts, so always load last</p>
+<pre class="r"><code>library(dplyr)</code></pre>
+<p>some packages may be needed without being loaded</p>
+<pre class="r"><code>fool_packrat = function() {
+    # needed to install formr package
+    library(devtools)
+    # needed to actually run rmarkdown in RStudio, but for some reason not in its dependencies
+    library(formatR)
+}</code></pre>
+</div>
+<div id="spin-r-files" class="section level2">
+<h2>Spin R files</h2>
+<p>R scripts can be documented in markdown using Roxygen comments, as demonstrated here This function turns all R files (that don’t have an Rmd file of the same name and that don’t start with an underscore _) into HTML pages</p>
+<pre class="r"><code>spin_R_files_to_site_html = function() {
+    library(knitr)
+    all_Rs = c(list.files(pattern = &quot;^[^_].+\\.R$&quot;), &quot;.Rprofile&quot;)
+    component_Rmds = list.files(pattern = &quot;^_.+\\.Rmd$&quot;)
+    temporary_Rmds = c()
+    for (i in seq_along(all_Rs)) {
+        Rmd_file = paste0(all_Rs[i], &quot;md&quot;)
+        if (!file.exists(Rmd_file)) {
+            next_document = length(temporary_Rmds) + 1
+            temporary_Rmds[next_document] = spin(all_Rs[i], knit = FALSE, envir = new.env(), format = &quot;Rmd&quot;)
+        }
+    }
+    components_and_scripts = c(temporary_Rmds, component_Rmds)
+    for (i in seq_along(components_and_scripts)) {
+        opts_chunk$set(eval = FALSE, cache = FALSE)
+        rmarkdown::render_site(components_and_scripts[i], quiet = TRUE)
+    }
+    opts_chunk$set(eval = TRUE, cache = TRUE)
+    unlink(temporary_Rmds)
+}</code></pre>
+</div>
+<div id="output-options" class="section level2">
+<h2>Output options</h2>
+<p>use pander to pretty-print objects (if possible)</p>
+<pre class="r"><code>opts_chunk$set(
+    render = pander_handler,
+    dev = &quot;svglite&quot;
+    )</code></pre>
+<p>don’t split tables, scroll horizontallys</p>
+<pre class="r"><code>panderOptions(&quot;table.split.table&quot;, Inf)
+
+regression_summary = function(model, indent = &quot;##&quot;) {
+    formr::asis_knit_child(&quot;_regression_summary.Rmd&quot;)
+}</code></pre>
 </div>
 </div>
 
