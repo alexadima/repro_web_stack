@@ -21,23 +21,57 @@
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<script src="site_libs/navigation-1.1/FileSaver.min.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; } /* Keyword */
+code > span.dt { color: #dfdfbf; } /* DataType */
+code > span.dv { color: #dcdccc; } /* DecVal */
+code > span.bn { color: #dca3a3; } /* BaseN */
+code > span.fl { color: #c0bed1; } /* Float */
+code > span.ch { color: #dca3a3; } /* Char */
+code > span.st { color: #cc9393; } /* String */
+code > span.co { color: #7f9f7f; } /* Comment */
+code > span.ot { color: #efef8f; } /* Other */
+code > span.al { color: #ffcfaf; } /* Alert */
+code > span.fu { color: #efef8f; } /* Function */
+code > span.er { color: #c3bf9f; } /* Error */
+code > span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+code > span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code > span.sc { color: #dca3a3; } /* SpecialChar */
+code > span.vs { color: #cc9393; } /* VerbatimString */
+code > span.ss { color: #cc9393; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #f0dfaf; } /* ControlFlow */
+code > span.op { color: #f0efd0; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code > span.at { } /* Attribute */
+code > span.do { color: #7f9f7f; } /* Documentation */
+code > span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code > span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+div.sourceCode {
+  overflow-x: visible;
+}
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
-}
-</script>
-
 
 
 <style type="text/css">
@@ -64,6 +98,9 @@ h6 {
 }
 .table th:not([align]) {
   text-align: left;
+}
+#rmd-source-code {
+  display: none;
 }
 </style>
 
@@ -163,6 +200,7 @@ $(document).ready(function () {
 </style>
 <script>
 $(document).ready(function () {
+  window.initializeSourceEmbed("index.Rmd");
   window.initializeCodeFolding("hide" === "show");
 });
 </script>
@@ -211,6 +249,8 @@ $(document).ready(function () {
 <ul class="dropdown-menu" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
 </ul>
 </div>
 
@@ -222,7 +262,7 @@ $(document).ready(function () {
 
 <div id="reproducible-website-stack" class="section level1 tabset tabset-sticky">
 <h1>Reproducible website stack</h1>
-<pre class="r"><code>source(&quot;0_helpers.R&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;0_helpers.R&quot;</span>)</code></pre></div>
 <p>We did this cool project.</p>
 <p>We used these <a href="0_helpers.html">helper functions</a> and this <a href="_regression_summary.html">knitr component</a>. These are the <a href=".Rprofile.html">.Rprofile settings</a></p>
 <ol style="list-style-type: decimal">
@@ -243,17 +283,17 @@ $(document).ready(function () {
 <h4>Package bibliography</h4>
 <div id="session-info-with-package-versions" class="section level5">
 <h5>Session info (with package versions)</h5>
-<pre class="r"><code># Make packrat bibliography
-packrat_bibliography(overwrite_bib = TRUE, silent = TRUE)
-# Turn the .R files into .Rmd files, turn those into .html, remove the .Rmd files
-spin_R_files_to_site_html()
-sessionInfo()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Make packrat bibliography</span>
+<span class="kw">packrat_bibliography</span>(<span class="dt">overwrite_bib =</span> <span class="ot">TRUE</span>, <span class="dt">silent =</span> <span class="ot">TRUE</span>)
+<span class="co"># Turn the .R files into .Rmd files, turn those into .html, remove the .Rmd files</span>
+<span class="kw">spin_R_files_to_site_html</span>()
+<span class="kw">sessionInfo</span>()</code></pre></div>
 <p><strong>R version 3.3.2 (2016-10-31)</strong></p>
 <p>**<a href="Platform:**" class="uri">Platform:**</a> x86_64-apple-darwin13.4.0 (64-bit)</p>
 <p><strong>locale:</strong> en_US.UTF-8||en_US.UTF-8||en_US.UTF-8||C||en_US.UTF-8||en_US.UTF-8</p>
 <p><strong>attached base packages:</strong> <em>stats</em>, <em>graphics</em>, <em>grDevices</em>, <em>utils</em>, <em>datasets</em>, <em>methods</em> and <em>base</em></p>
 <p><strong>other attached packages:</strong> <em>dplyr(v.0.5.0)</em>, <em>svglite(v.1.2.0)</em>, <em>tidyr(v.0.6.1)</em>, <em>ggplot2(v.2.2.1)</em>, <em>effects(v.3.1-2)</em>, <em>broom(v.0.4.1)</em>, <em>stringr(v.1.1.0)</em>, <em>lubridate(v.1.6.0)</em>, <em>pander(v.0.6.0)</em>, <em>formr(v.0.6.5)</em>, <em>knitr(v.1.15.1)</em> and <em>rmarkdown(v.1.3)</em></p>
-<p><strong>loaded via a namespace (and not attached):</strong> <em>Rcpp(v.0.12.9)</em>, <em>nloptr(v.1.0.4)</em>, <em>plyr(v.1.8.4)</em>, <em>tools(v.3.3.2)</em>, <em>digest(v.0.6.12)</em>, <em>lme4(v.1.1-12)</em>, <em>packrat(v.0.4.8-1)</em>, <em>evaluate(v.0.10)</em>, <em>tibble(v.1.2)</em>, <em>gtable(v.0.2.0)</em>, <em>nlme(v.3.1-130)</em>, <em>lattice(v.0.20-34)</em>, <em>Matrix(v.1.2-8)</em>, <em>psych(v.1.6.12)</em>, <em>DBI(v.0.5-1)</em>, <em>yaml(v.2.1.14)</em>, <em>parallel(v.3.3.2)</em>, <em>gdtools(v.0.1.3)</em>, <em>nnet(v.7.3-12)</em>, <em>rprojroot(v.1.2)</em>, <em>grid(v.3.3.2)</em>, <em>R6(v.2.2.0)</em>, <em>foreign(v.0.8-67)</em>, <em>minqa(v.1.2.4)</em>, <em>reshape2(v.1.4.2)</em>, <em>magrittr(v.1.5)</em>, <em>backports(v.1.0.5)</em>, <em>scales(v.0.4.1)</em>, <em>htmltools(v.0.3.5)</em>, <em>splines(v.3.3.2)</em>, <em>MASS(v.7.3-45)</em>, <em>assertthat(v.0.1)</em>, <em>mnormt(v.1.5-5)</em>, <em>colorspace(v.1.3-2)</em>, <em>stringi(v.1.1.2)</em>, <em>lazyeval(v.0.2.0)</em> and <em>munsell(v.0.4.3)</em></p>
+<p><strong>loaded via a namespace (and not attached):</strong> <em>Rcpp(v.0.12.9)</em>, <em>nloptr(v.1.0.4)</em>, <em>plyr(v.1.8.4)</em>, <em>base64enc(v.0.1-3)</em>, <em>tools(v.3.3.2)</em>, <em>digest(v.0.6.12)</em>, <em>lme4(v.1.1-12)</em>, <em>packrat(v.0.4.8-1)</em>, <em>evaluate(v.0.10)</em>, <em>tibble(v.1.2)</em>, <em>gtable(v.0.2.0)</em>, <em>nlme(v.3.1-130)</em>, <em>lattice(v.0.20-34)</em>, <em>Matrix(v.1.2-8)</em>, <em>psych(v.1.6.12)</em>, <em>DBI(v.0.5-1)</em>, <em>yaml(v.2.1.14)</em>, <em>parallel(v.3.3.2)</em>, <em>gdtools(v.0.1.3)</em>, <em>nnet(v.7.3-12)</em>, <em>rprojroot(v.1.2)</em>, <em>grid(v.3.3.2)</em>, <em>R6(v.2.2.0)</em>, <em>foreign(v.0.8-67)</em>, <em>minqa(v.1.2.4)</em>, <em>reshape2(v.1.4.2)</em>, <em>magrittr(v.1.5)</em>, <em>backports(v.1.0.5)</em>, <em>scales(v.0.4.1)</em>, <em>htmltools(v.0.3.5)</em>, <em>splines(v.3.3.2)</em>, <em>MASS(v.7.3-45)</em>, <em>assertthat(v.0.1)</em>, <em>mnormt(v.1.5-5)</em>, <em>colorspace(v.1.3-2)</em>, <em>stringi(v.1.1.2)</em>, <em>lazyeval(v.0.2.0)</em> and <em>munsell(v.0.4.3)</em></p>
 </div>
 <div id="references" class="section level5 unnumbered active">
 <h5>References</h5>
@@ -307,6 +347,7 @@ sessionInfo()</code></pre>
 </div>
 </div>
 
+<div id="rmd-source-code">LS0tCnBhZ2V0aXRsZTogIlJlcHJvZHVjaWJsZSB3ZWJzaXRlIHN0YWNrIgpiaWJsaW9ncmFwaHk6IHBhY2tyYXRfYmlibGlvZ3JhcGh5LmJpYnRleApjc2w6IGFwYS1jdXN0b20tbm8taXNzdWUuY3NsCm5vY2l0ZTogfAogICAgQFIgQHBhY2tyYXQgQHJtYXJrZG93biBAa25pdHIgQGZvcm1yIEBwYW5kZXIgQGx1YnJpZGF0ZSBAc3RyaW5nciBAYnJvb20gQGdncGxvdDIgQHRpZHlyIEBkcGx5ciBAZGV2dG9vbHMgQGZvcm1hdFIKLS0tCgojIFJlcHJvZHVjaWJsZSB3ZWJzaXRlIHN0YWNrIHsudGFic2V0IC50YWJzZXQtc3RpY2t5fQoKYGBge3IgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0Kc291cmNlKCIwX2hlbHBlcnMuUiIpCmBgYAoKV2UgZGlkIHRoaXMgY29vbCBwcm9qZWN0LgoKV2UgdXNlZCB0aGVzZSBbaGVscGVyIGZ1bmN0aW9uc10oMF9oZWxwZXJzLmh0bWwpIGFuZCAKdGhpcyBba25pdHIgY29tcG9uZW50XShfcmVncmVzc2lvbl9zdW1tYXJ5Lmh0bWwpLiBUaGVzZSBhcmUgdGhlIFsuUnByb2ZpbGUgc2V0dGluZ3NdKC5ScHJvZmlsZS5odG1sKQoKMS4gRmlyc3Qgd2UgW3dyYW5nbGVkIHRoZSBkYXRhXSgxX3dyYW5nbGVfZGF0YS5odG1sKS4KMi4gVGhlbiB3ZSBsb29rZWQgYXQgc29tZSBbZGVzY3JpcHRpdmVzXSgyX2Rlc2NyaXB0aXZlcy5odG1sKS4KMy4gVGhlbiB3ZSBbYW5hbHlzZWRdKDNfYW5hbHlzZXMuaHRtbCkgaXQuCgojIyBBdXRob3JzICYgQWNrbm93bGVkZ2VtZW50cyB7LnRhYnNldCAudGFic2V0LXN0aWNreX0KCiMjIyBBdXRob3JzCllvdSEKClRoaXMgc3VwcGxlbWVudGFyeSB3ZWJzaXRlIGhhcyBiZWVuIGFyY2hpdmVkIG9uIFplbm9kby5vcmcgWyFbRE9JXShodHRwczovL3plbm9kby5vcmcvYmFkZ2UveHh4KV0oaHR0cHM6Ly96ZW5vZG8ub3JnL3h4eCkuCgojIyMgQWNrbm93bGVkZ2VtZW50cyB7LmFjdGl2ZX0KCgojIyMjIFBhY2thZ2UgYmlibGlvZ3JhcGh5IHsudGFic2V0IC50YWJzZXQtc3RpY2t5fQoKIyMjIyMgU2Vzc2lvbiBpbmZvICh3aXRoIHBhY2thZ2UgdmVyc2lvbnMpCmBgYHtyfQojIE1ha2UgcGFja3JhdCBiaWJsaW9ncmFwaHkKcGFja3JhdF9iaWJsaW9ncmFwaHkob3ZlcndyaXRlX2JpYiA9IFRSVUUsIHNpbGVudCA9IFRSVUUpCiMgVHVybiB0aGUgLlIgZmlsZXMgaW50byAuUm1kIGZpbGVzLCB0dXJuIHRob3NlIGludG8gLmh0bWwsIHJlbW92ZSB0aGUgLlJtZCBmaWxlcwpzcGluX1JfZmlsZXNfdG9fc2l0ZV9odG1sKCkKc2Vzc2lvbkluZm8oKQpgYGAKCiMjIyMjIFJlZmVyZW5jZXMgey5hY3RpdmV9Cg==</div>
 
 
 

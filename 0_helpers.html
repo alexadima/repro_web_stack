@@ -21,23 +21,57 @@
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<script src="site_libs/navigation-1.1/FileSaver.min.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; } /* Keyword */
+code > span.dt { color: #dfdfbf; } /* DataType */
+code > span.dv { color: #dcdccc; } /* DecVal */
+code > span.bn { color: #dca3a3; } /* BaseN */
+code > span.fl { color: #c0bed1; } /* Float */
+code > span.ch { color: #dca3a3; } /* Char */
+code > span.st { color: #cc9393; } /* String */
+code > span.co { color: #7f9f7f; } /* Comment */
+code > span.ot { color: #efef8f; } /* Other */
+code > span.al { color: #ffcfaf; } /* Alert */
+code > span.fu { color: #efef8f; } /* Function */
+code > span.er { color: #c3bf9f; } /* Error */
+code > span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+code > span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code > span.sc { color: #dca3a3; } /* SpecialChar */
+code > span.vs { color: #cc9393; } /* VerbatimString */
+code > span.ss { color: #cc9393; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #f0dfaf; } /* ControlFlow */
+code > span.op { color: #f0efd0; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code > span.at { } /* Attribute */
+code > span.do { color: #7f9f7f; } /* Documentation */
+code > span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code > span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+div.sourceCode {
+  overflow-x: visible;
+}
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
-}
-</script>
-
 
 
 <style type="text/css">
@@ -64,6 +98,9 @@ h6 {
 }
 .table th:not([align]) {
   text-align: left;
+}
+#rmd-source-code {
+  display: none;
 }
 </style>
 
@@ -163,7 +200,8 @@ $(document).ready(function () {
 </style>
 <script>
 $(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
+  window.initializeSourceEmbed("0_helpers.Rmd");
+  window.initializeCodeFolding("show" === "show");
 });
 </script>
 
@@ -211,6 +249,8 @@ $(document).ready(function () {
 <ul class="dropdown-menu" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
 </ul>
 </div>
 
@@ -220,96 +260,113 @@ $(document).ready(function () {
 </div>
 
 
-<div id="helper-functions-used-throughout" class="section level1 tab-content">
+<div id="helper-functions-used-throughout" class="section level1 tabset tabset-sticky">
 <h1>Helper functions used throughout</h1>
 <p>documentation on the functions is interspersed through code comments</p>
 <div id="set-some-options" class="section level2">
 <h2>set some options</h2>
 <p>dont show messages when loading libraries</p>
-<pre class="r"><code># library = function(...) suppressMessages(base::library(...))</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># library = function(...) suppressMessages(base::library(...))</span></code></pre></div>
 <p>never set strings as factors automatically (google for reason why)</p>
-<pre class="r"><code>options(stringsAsFactors = FALSE)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <p>show four significant digits tops</p>
-<pre class="r"><code>options(digits = 4)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">digits =</span> <span class="dv">4</span>)</code></pre></div>
 <p>tend not to show scientific notation</p>
-<pre class="r"><code>options(scipen = 7)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">scipen =</span> <span class="dv">7</span>)</code></pre></div>
 <p>make output a bit wider</p>
-<pre class="r"><code>options(width = 110)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">width =</span> <span class="dv">110</span>)</code></pre></div>
 </div>
 <div id="load-packages" class="section level2">
 <h2>Load packages</h2>
 <p>generate the site</p>
-<pre class="r"><code>library(rmarkdown)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rmarkdown)</code></pre></div>
 <p>set options for chunks</p>
-<pre class="r"><code>library(knitr)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(knitr)</code></pre></div>
 <p>my formr utility package to generate e.g. the bibliography</p>
-<pre class="r"><code>library(formr)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(formr)</code></pre></div>
 <p>pretty-printed output</p>
-<pre class="r"><code>library(pander)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pander)</code></pre></div>
 <p>tidyverse date times</p>
-<pre class="r"><code>library(lubridate)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lubridate)</code></pre></div>
 <p>tidyverse strings</p>
-<pre class="r"><code>library(stringr)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(stringr)</code></pre></div>
 <p>extractor functions for models</p>
-<pre class="r"><code>library(broom)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(broom)</code></pre></div>
 <p>marginal effects plots for regressions</p>
-<pre class="r"><code>library(effects)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(effects)</code></pre></div>
 <p>grammar of graphics plots</p>
-<pre class="r"><code>library(ggplot2)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)</code></pre></div>
 <p>tidyverse: transform data wide to long</p>
-<pre class="r"><code>library(tidyr)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)</code></pre></div>
 <p>svg graphs</p>
-<pre class="r"><code>library(svglite);</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(svglite);</code></pre></div>
 <p>tidyverse-style data wrangling. has a lot of naming conflicts, so always load last</p>
-<pre class="r"><code>library(dplyr)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)</code></pre></div>
 <p>some packages may be needed without being loaded</p>
-<pre class="r"><code>fool_packrat = function() {
-    # needed to install formr package
-    library(devtools)
-    # needed to actually run rmarkdown in RStudio, but for some reason not in its dependencies
-    library(formatR)
-}</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fool_packrat =<span class="st"> </span>function() {
+    <span class="co"># needed to install formr package</span>
+    <span class="kw">library</span>(devtools)
+    <span class="co"># needed to actually run rmarkdown in RStudio, but for some reason not in its dependencies</span>
+    <span class="kw">library</span>(formatR)
+}</code></pre></div>
 </div>
 <div id="spin-r-files" class="section level2">
 <h2>Spin R files</h2>
 <p>R scripts can be documented in markdown using Roxygen comments, as demonstrated here This function turns all R files (that don’t have an Rmd file of the same name and that don’t start with an underscore _) into HTML pages</p>
-<pre class="r"><code>spin_R_files_to_site_html = function() {
-    library(knitr)
-    all_Rs = c(list.files(pattern = &quot;^[^_].+\\.R$&quot;), &quot;.Rprofile&quot;)
-    component_Rmds = list.files(pattern = &quot;^_.+\\.Rmd$&quot;)
-    temporary_Rmds = c()
-    for (i in seq_along(all_Rs)) {
-        Rmd_file = paste0(all_Rs[i], &quot;md&quot;)
-        if (!file.exists(Rmd_file)) {
-            next_document = length(temporary_Rmds) + 1
-            temporary_Rmds[next_document] = spin(all_Rs[i], knit = FALSE, envir = new.env(), format = &quot;Rmd&quot;)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">spin_R_files_to_site_html =<span class="st"> </span>function() {
+    <span class="kw">library</span>(knitr)
+    all_Rs =<span class="st"> </span><span class="kw">c</span>(<span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">&quot;^[^_].+</span><span class="ch">\\</span><span class="st">.R$&quot;</span>), <span class="st">&quot;.Rprofile&quot;</span>)
+    component_Rmds =<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">&quot;^_.+</span><span class="ch">\\</span><span class="st">.Rmd$&quot;</span>)
+    temporary_Rmds =<span class="st"> </span><span class="kw">c</span>()
+    for (i in <span class="kw">seq_along</span>(all_Rs)) {
+        if(all_Rs[i] ==<span class="st"> &quot;.Rprofile&quot;</span>) {
+            Rmd_file =<span class="st"> &quot;.Rprofile.Rmd&quot;</span>
+        } else {
+            Rmd_file =<span class="st"> </span><span class="kw">paste0</span>(all_Rs[i], <span class="st">&quot;md&quot;</span>)
+        }
+        if (!<span class="kw">file.exists</span>(Rmd_file)) {
+            next_document =<span class="st"> </span><span class="kw">length</span>(temporary_Rmds) +<span class="st"> </span><span class="dv">1</span>
+            temporary_Rmds[next_document] =<span class="st"> </span><span class="kw">spin</span>(all_Rs[i], <span class="dt">knit =</span> <span class="ot">FALSE</span>, <span class="dt">envir =</span> <span class="kw">new.env</span>(), <span class="dt">format =</span> <span class="st">&quot;Rmd&quot;</span>)
+            prepended_yaml =<span class="st"> </span><span class="kw">paste0</span>(<span class="kw">c</span>(<span class="st">&quot;---</span>
+<span class="st">output:</span>
+<span class="st">  html_document:</span>
+<span class="st">    code_folding: &#39;show&#39;</span>
+<span class="st">---</span>
+
+<span class="st">&quot;</span>, <span class="kw">readLines</span>(temporary_Rmds[next_document])), <span class="dt">collapse =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+            <span class="kw">cat</span>(prepended_yaml, <span class="dt">file =</span> temporary_Rmds[next_document])
         }
     }
-    components_and_scripts = c(temporary_Rmds, component_Rmds)
-    for (i in seq_along(components_and_scripts)) {
-        opts_chunk$set(eval = FALSE, cache = FALSE)
-        rmarkdown::render_site(components_and_scripts[i], quiet = TRUE)
+    components_and_scripts =<span class="st"> </span><span class="kw">c</span>(temporary_Rmds, component_Rmds)
+    for (i in <span class="kw">seq_along</span>(components_and_scripts)) {
+        opts_chunk$<span class="kw">set</span>(<span class="dt">eval =</span> <span class="ot">FALSE</span>, <span class="dt">cache =</span> <span class="ot">FALSE</span>)
+        <span class="co"># if we call render_site on the .R file directly it adds a header I don&#39;t like</span>
+        rmarkdown::<span class="kw">render_site</span>(components_and_scripts[i], <span class="dt">quiet =</span> <span class="ot">TRUE</span>)
     }
-    opts_chunk$set(eval = TRUE, cache = TRUE)
-    unlink(temporary_Rmds)
-}</code></pre>
+    opts_chunk$<span class="kw">set</span>(<span class="dt">eval =</span> <span class="ot">TRUE</span>, <span class="dt">cache =</span> <span class="ot">TRUE</span>)
+    <span class="kw">unlink</span>(temporary_Rmds)
+}</code></pre></div>
 </div>
 <div id="output-options" class="section level2">
 <h2>Output options</h2>
 <p>use pander to pretty-print objects (if possible)</p>
-<pre class="r"><code>opts_chunk$set(
-    render = pander_handler,
-    dev = &quot;svglite&quot;
-    )</code></pre>
-<p>don’t split tables, scroll horizontallys</p>
-<pre class="r"><code>panderOptions(&quot;table.split.table&quot;, Inf)
-
-regression_summary = function(model, indent = &quot;##&quot;) {
-    formr::asis_knit_child(&quot;_regression_summary.Rmd&quot;)
-}</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">opts_chunk$<span class="kw">set</span>(
+    <span class="dt">render =</span> pander_handler,
+    <span class="dt">dev =</span> <span class="st">&quot;svglite&quot;</span>
+    )</code></pre></div>
+<p>don’t split tables, scroll horizontally</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">panderOptions</span>(<span class="st">&quot;table.split.table&quot;</span>, <span class="ot">Inf</span>)</code></pre></div>
+</div>
+<div id="knitr-components" class="section level2">
+<h2>Knitr components</h2>
+<p>summarise regression using a “knitr component”</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regression_summary =<span class="st"> </span>function(model, <span class="dt">indent =</span> <span class="st">&quot;##&quot;</span>) {
+    formr::<span class="kw">asis_knit_child</span>(<span class="st">&quot;_regression_summary.Rmd&quot;</span>)
+}</code></pre></div>
 </div>
 </div>
 
+<div id="rmd-source-code">LS0tCm91dHB1dDoKICBodG1sX2RvY3VtZW50OgogICAgY29kZV9mb2xkaW5nOiAnc2hvdycKLS0tCgoKIyBIZWxwZXIgZnVuY3Rpb25zIHVzZWQgdGhyb3VnaG91dCB7LnRhYnNldCAudGFic2V0LXN0aWNreX0KZG9jdW1lbnRhdGlvbiBvbiB0aGUgZnVuY3Rpb25zIGlzIGludGVyc3BlcnNlZCB0aHJvdWdoIGNvZGUgY29tbWVudHMKCiMjIHNldCBzb21lIG9wdGlvbnMKZG9udCBzaG93IG1lc3NhZ2VzIHdoZW4gbG9hZGluZyBsaWJyYXJpZXMKCmBgYHtyIH0KIyBsaWJyYXJ5ID0gZnVuY3Rpb24oLi4uKSBzdXBwcmVzc01lc3NhZ2VzKGJhc2U6OmxpYnJhcnkoLi4uKSkKYGBgCgpuZXZlciBzZXQgc3RyaW5ncyBhcyBmYWN0b3JzIGF1dG9tYXRpY2FsbHkgKGdvb2dsZSBmb3IgcmVhc29uIHdoeSkKCmBgYHtyIH0Kb3B0aW9ucyhzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UpCmBgYAoKc2hvdyBmb3VyIHNpZ25pZmljYW50IGRpZ2l0cyB0b3BzCgpgYGB7ciB9Cm9wdGlvbnMoZGlnaXRzID0gNCkKYGBgCgp0ZW5kIG5vdCB0byBzaG93IHNjaWVudGlmaWMgbm90YXRpb24KCmBgYHtyIH0Kb3B0aW9ucyhzY2lwZW4gPSA3KQpgYGAKCm1ha2Ugb3V0cHV0IGEgYml0IHdpZGVyCgpgYGB7ciB9Cm9wdGlvbnMod2lkdGggPSAxMTApCmBgYAoKIyMgTG9hZCBwYWNrYWdlcwpnZW5lcmF0ZSB0aGUgc2l0ZQoKYGBge3IgfQpsaWJyYXJ5KHJtYXJrZG93bikKYGBgCgpzZXQgb3B0aW9ucyBmb3IgY2h1bmtzCgpgYGB7ciB9CmxpYnJhcnkoa25pdHIpCmBgYAoKbXkgZm9ybXIgdXRpbGl0eSBwYWNrYWdlIHRvIGdlbmVyYXRlIGUuZy4gdGhlIGJpYmxpb2dyYXBoeQoKYGBge3IgfQpsaWJyYXJ5KGZvcm1yKQpgYGAKCnByZXR0eS1wcmludGVkIG91dHB1dAoKYGBge3IgfQpsaWJyYXJ5KHBhbmRlcikKYGBgCgp0aWR5dmVyc2UgZGF0ZSB0aW1lcwoKYGBge3IgfQpsaWJyYXJ5KGx1YnJpZGF0ZSkKYGBgCgp0aWR5dmVyc2Ugc3RyaW5ncwoKYGBge3IgfQpsaWJyYXJ5KHN0cmluZ3IpCmBgYAoKZXh0cmFjdG9yIGZ1bmN0aW9ucyBmb3IgbW9kZWxzCgpgYGB7ciB9CmxpYnJhcnkoYnJvb20pCmBgYAoKbWFyZ2luYWwgZWZmZWN0cyBwbG90cyBmb3IgcmVncmVzc2lvbnMKCmBgYHtyIH0KbGlicmFyeShlZmZlY3RzKQpgYGAKCmdyYW1tYXIgb2YgZ3JhcGhpY3MgcGxvdHMKCmBgYHtyIH0KbGlicmFyeShnZ3Bsb3QyKQpgYGAKCnRpZHl2ZXJzZTogdHJhbnNmb3JtIGRhdGEgd2lkZSB0byBsb25nCgpgYGB7ciB9CmxpYnJhcnkodGlkeXIpCmBgYAoKc3ZnIGdyYXBocwoKYGBge3IgfQpsaWJyYXJ5KHN2Z2xpdGUpOwpgYGAKCnRpZHl2ZXJzZS1zdHlsZSBkYXRhIHdyYW5nbGluZy4gaGFzIGEgbG90IG9mIG5hbWluZyBjb25mbGljdHMsIHNvIGFsd2F5cyBsb2FkIGxhc3QKCmBgYHtyIH0KbGlicmFyeShkcGx5cikKYGBgCgpzb21lIHBhY2thZ2VzIG1heSBiZSBuZWVkZWQgd2l0aG91dCBiZWluZyBsb2FkZWQKCmBgYHtyIH0KZm9vbF9wYWNrcmF0ID0gZnVuY3Rpb24oKSB7CgkjIG5lZWRlZCB0byBpbnN0YWxsIGZvcm1yIHBhY2thZ2UKCWxpYnJhcnkoZGV2dG9vbHMpCgkjIG5lZWRlZCB0byBhY3R1YWxseSBydW4gcm1hcmtkb3duIGluIFJTdHVkaW8sIGJ1dCBmb3Igc29tZSByZWFzb24gbm90IGluIGl0cyBkZXBlbmRlbmNpZXMKCWxpYnJhcnkoZm9ybWF0UikKfQpgYGAKCiMjIFNwaW4gUiBmaWxlcwpSIHNjcmlwdHMgY2FuIGJlIGRvY3VtZW50ZWQgaW4gbWFya2Rvd24gdXNpbmcgUm94eWdlbiBjb21tZW50cywgYXMgZGVtb25zdHJhdGVkIGhlcmUKVGhpcyBmdW5jdGlvbiB0dXJucyBhbGwgUiBmaWxlcyAodGhhdCBkb24ndCBoYXZlIGFuIFJtZCBmaWxlIG9mIHRoZSBzYW1lIG5hbWUgYW5kIHRoYXQgZG9uJ3Qgc3RhcnQgd2l0aCBhbiB1bmRlcnNjb3JlIF8pIGludG8gSFRNTCBwYWdlcwoKYGBge3IgfQpzcGluX1JfZmlsZXNfdG9fc2l0ZV9odG1sID0gZnVuY3Rpb24oKSB7CglsaWJyYXJ5KGtuaXRyKQoJYWxsX1JzID0gYyhsaXN0LmZpbGVzKHBhdHRlcm4gPSAiXlteX10uK1xcLlIkIiksICIuUnByb2ZpbGUiKQoJY29tcG9uZW50X1JtZHMgPSBsaXN0LmZpbGVzKHBhdHRlcm4gPSAiXl8uK1xcLlJtZCQiKQoJdGVtcG9yYXJ5X1JtZHMgPSBjKCkKCWZvciAoaSBpbiBzZXFfYWxvbmcoYWxsX1JzKSkgewoJCWlmKGFsbF9Sc1tpXSA9PSAiLlJwcm9maWxlIikgewoJCQlSbWRfZmlsZSA9ICIuUnByb2ZpbGUuUm1kIgoJCX0gZWxzZSB7CgkJCVJtZF9maWxlID0gcGFzdGUwKGFsbF9Sc1tpXSwgIm1kIikKCQl9CgkJaWYgKCFmaWxlLmV4aXN0cyhSbWRfZmlsZSkpIHsKCQkJbmV4dF9kb2N1bWVudCA9IGxlbmd0aCh0ZW1wb3JhcnlfUm1kcykgKyAxCgkJCXRlbXBvcmFyeV9SbWRzW25leHRfZG9jdW1lbnRdID0gc3BpbihhbGxfUnNbaV0sIGtuaXQgPSBGQUxTRSwgZW52aXIgPSBuZXcuZW52KCksIGZvcm1hdCA9ICJSbWQiKQoJCQlwcmVwZW5kZWRfeWFtbCA9IHBhc3RlMChjKCItLS0Kb3V0cHV0OgogIGh0bWxfZG9jdW1lbnQ6CiAgICBjb2RlX2ZvbGRpbmc6ICdzaG93JwotLS0KCiIsIHJlYWRMaW5lcyh0ZW1wb3JhcnlfUm1kc1tuZXh0X2RvY3VtZW50XSkpLCBjb2xsYXBzZSA9ICJcbiIpCgkJCWNhdChwcmVwZW5kZWRfeWFtbCwgZmlsZSA9IHRlbXBvcmFyeV9SbWRzW25leHRfZG9jdW1lbnRdKQoJCX0KCX0KCWNvbXBvbmVudHNfYW5kX3NjcmlwdHMgPSBjKHRlbXBvcmFyeV9SbWRzLCBjb21wb25lbnRfUm1kcykKCWZvciAoaSBpbiBzZXFfYWxvbmcoY29tcG9uZW50c19hbmRfc2NyaXB0cykpIHsKCQlvcHRzX2NodW5rJHNldChldmFsID0gRkFMU0UsIGNhY2hlID0gRkFMU0UpCgkJIyBpZiB3ZSBjYWxsIHJlbmRlcl9zaXRlIG9uIHRoZSAuUiBmaWxlIGRpcmVjdGx5IGl0IGFkZHMgYSBoZWFkZXIgSSBkb24ndCBsaWtlCgkJcm1hcmtkb3duOjpyZW5kZXJfc2l0ZShjb21wb25lbnRzX2FuZF9zY3JpcHRzW2ldLCBxdWlldCA9IFRSVUUpCgl9CglvcHRzX2NodW5rJHNldChldmFsID0gVFJVRSwgY2FjaGUgPSBUUlVFKQoJdW5saW5rKHRlbXBvcmFyeV9SbWRzKQp9CmBgYAoKIyMgT3V0cHV0IG9wdGlvbnMKdXNlIHBhbmRlciB0byBwcmV0dHktcHJpbnQgb2JqZWN0cyAoaWYgcG9zc2libGUpCgpgYGB7ciB9Cm9wdHNfY2h1bmskc2V0KAoJcmVuZGVyID0gcGFuZGVyX2hhbmRsZXIsCglkZXYgPSAic3ZnbGl0ZSIKCSkKYGBgCgpkb24ndCBzcGxpdCB0YWJsZXMsIHNjcm9sbCBob3Jpem9udGFsbHkKCmBgYHtyIH0KcGFuZGVyT3B0aW9ucygidGFibGUuc3BsaXQudGFibGUiLCBJbmYpCmBgYAoKIyMgS25pdHIgY29tcG9uZW50cwoKc3VtbWFyaXNlIHJlZ3Jlc3Npb24gdXNpbmcgYSAia25pdHIgY29tcG9uZW50IgoKYGBge3IgfQpyZWdyZXNzaW9uX3N1bW1hcnkgPSBmdW5jdGlvbihtb2RlbCwgaW5kZW50ID0gIiMjIikgewoJZm9ybXI6OmFzaXNfa25pdF9jaGlsZCgiX3JlZ3Jlc3Npb25fc3VtbWFyeS5SbWQiKQp9CmBgYAo=</div>
 
 
 

@@ -21,23 +21,57 @@
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<script src="site_libs/navigation-1.1/FileSaver.min.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; } /* Keyword */
+code > span.dt { color: #dfdfbf; } /* DataType */
+code > span.dv { color: #dcdccc; } /* DecVal */
+code > span.bn { color: #dca3a3; } /* BaseN */
+code > span.fl { color: #c0bed1; } /* Float */
+code > span.ch { color: #dca3a3; } /* Char */
+code > span.st { color: #cc9393; } /* String */
+code > span.co { color: #7f9f7f; } /* Comment */
+code > span.ot { color: #efef8f; } /* Other */
+code > span.al { color: #ffcfaf; } /* Alert */
+code > span.fu { color: #efef8f; } /* Function */
+code > span.er { color: #c3bf9f; } /* Error */
+code > span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+code > span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code > span.sc { color: #dca3a3; } /* SpecialChar */
+code > span.vs { color: #cc9393; } /* VerbatimString */
+code > span.ss { color: #cc9393; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #f0dfaf; } /* ControlFlow */
+code > span.op { color: #f0efd0; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code > span.at { } /* Attribute */
+code > span.do { color: #7f9f7f; } /* Documentation */
+code > span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code > span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+div.sourceCode {
+  overflow-x: visible;
+}
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
-}
-</script>
-
 
 
 <style type="text/css">
@@ -64,6 +98,9 @@ h6 {
 }
 .table th:not([align]) {
   text-align: left;
+}
+#rmd-source-code {
+  display: none;
 }
 </style>
 
@@ -163,6 +200,7 @@ $(document).ready(function () {
 </style>
 <script>
 $(document).ready(function () {
+  window.initializeSourceEmbed("_regression_summary.Rmd");
   window.initializeCodeFolding("hide" === "show");
 });
 </script>
@@ -211,6 +249,8 @@ $(document).ready(function () {
 <ul class="dropdown-menu" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
 </ul>
 </div>
 
@@ -220,22 +260,23 @@ $(document).ready(function () {
 </div>
 
 
-<pre class="r"><code>if (!exists(&quot;indent&quot;)) {
-    indent = &#39;##&#39; # ugly hack so _regression_summary can be &quot;spun&quot; (variables included via `r ` have to be available)
-}</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">if (!<span class="kw">exists</span>(<span class="st">&quot;indent&quot;</span>)) {
+    indent =<span class="st"> &#39;##&#39;</span> <span class="co"># ugly hack so _regression_summary can be &quot;spun&quot; (variables included via `r ` have to be available)</span>
+}</code></pre></div>
 <div id="summary" class="section level3">
 <h3>Summary</h3>
-<pre class="r"><code>summary(model)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(model)</code></pre></div>
 </div>
 <div id="marginal-effect-plot" class="section level3">
 <h3>Marginal effect plot</h3>
-<pre class="r"><code>plot(allEffects(model))</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">allEffects</span>(model))</code></pre></div>
 </div>
 <div id="diagnostics" class="section level3">
 <h3>Diagnostics</h3>
-<pre class="r"><code>plot(model)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(model)</code></pre></div>
 </div>
 
+<div id="rmd-source-code">YGBge3IgZXZhbD1UUlVFfQppZiAoIWV4aXN0cygiaW5kZW50IikpIHsKCWluZGVudCA9ICcjIycgIyB1Z2x5IGhhY2sgc28gX3JlZ3Jlc3Npb25fc3VtbWFyeSBjYW4gYmUgInNwdW4iICh2YXJpYWJsZXMgaW5jbHVkZWQgdmlhIGByIGAgaGF2ZSB0byBiZSBhdmFpbGFibGUpCn0KYGBgCgpgciBpbmRlbnRgIyBTdW1tYXJ5CmBgYHtyfQpzdW1tYXJ5KG1vZGVsKQpgYGAKCmByIGluZGVudGAjIE1hcmdpbmFsIGVmZmVjdCBwbG90CmBgYHtyfQpwbG90KGFsbEVmZmVjdHMobW9kZWwpKQpgYGAKCgpgciBpbmRlbnRgIyBEaWFnbm9zdGljcwpgYGB7cn0KcGxvdChtb2RlbCkKYGBgCg==</div>
 
 
 
