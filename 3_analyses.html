@@ -340,12 +340,12 @@ $(document).ready(function () {
 <div id="marginal-effect-plot" class="section level3">
 <h3>Marginal effect plot</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">allEffects</span>(model))</code></pre></div>
-<p><img src="3_analyses_files/figure-html/unnamed-chunk-7-1.svg" width="672" /></p>
+<p><img src="3_analyses_files/figure-html/unnamed-chunk-8-1.svg" width="672" /></p>
 </div>
 <div id="diagnostics" class="section level3">
 <h3>Diagnostics</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(model)</code></pre></div>
-<p><img src="3_analyses_files/figure-html/unnamed-chunk-8-1.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-8-2.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-8-3.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-8-4.svg" width="672" /></p>
+<p><img src="3_analyses_files/figure-html/unnamed-chunk-9-1.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-9-2.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-9-3.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-9-4.svg" width="672" /></p>
 </div>
 </div>
 <div id="super-advanced-model" class="section level2 active tabset tabset-sticky">
@@ -456,17 +456,58 @@ $(document).ready(function () {
 <div id="marginal-effect-plot-1" class="section level3">
 <h3>Marginal effect plot</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">allEffects</span>(model))</code></pre></div>
-<p><img src="3_analyses_files/figure-html/unnamed-chunk-11-1.svg" width="672" /></p>
+<p><img src="3_analyses_files/figure-html/unnamed-chunk-12-1.svg" width="672" /></p>
 </div>
 <div id="diagnostics-1" class="section level3">
 <h3>Diagnostics</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(model)</code></pre></div>
-<p><img src="3_analyses_files/figure-html/unnamed-chunk-12-1.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-12-2.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-12-3.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-12-4.svg" width="672" /></p>
+<p><img src="3_analyses_files/figure-html/unnamed-chunk-13-1.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-13-2.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-13-3.svg" width="672" /><img src="3_analyses_files/figure-html/unnamed-chunk-13-4.svg" width="672" /></p>
 </div>
+</div>
+<div id="summary-2" class="section level2">
+<h2>Summary</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bind_rows</span>(
+    <span class="st">&quot;Model 1&quot;</span> =<span class="st"> </span><span class="kw">glance</span>(m1), 
+    <span class="st">&quot;Model 2&quot;</span> =<span class="st"> </span><span class="kw">glance</span>(m2),
+<span class="dt">.id =</span> <span class="st">&quot;Model&quot;</span>) %&gt;%<span class="st"> </span><span class="kw">arrange</span>(AIC) %&gt;%<span class="st"> </span><span class="kw">select</span>(Model, adj.r.squared, BIC, deviance, df.residual)</code></pre></div>
+<table style="width:75%;">
+<colgroup>
+<col width="11%" />
+<col width="22%" />
+<col width="8%" />
+<col width="15%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Model</th>
+<th align="center">adj.r.squared</th>
+<th align="center">BIC</th>
+<th align="center">deviance</th>
+<th align="center">df.residual</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Model 2</td>
+<td align="center">0.5809</td>
+<td align="center">124.6</td>
+<td align="center">22.65</td>
+<td align="center">36</td>
+</tr>
+<tr class="even">
+<td align="center">Model 1</td>
+<td align="center">0.5578</td>
+<td align="center">165.5</td>
+<td align="center">43.98</td>
+<td align="center">59</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
-<div id="rmd-source-code">IyBXcmFuZ2xlIGRhdGEgey50YWJzZXQgLnRhYnNldC1zdGlja3l9CgpgYGB7ciBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQpzb3VyY2UoIjBfaGVscGVycy5SIikKYGBgCgojIyBMb2FkIGRhdGEKCmBgYHtyfQptc2xlZXAgPSByZWFkUkRTKCJtc2xlZXBfcHJvY2Vzc2VkLnJkcyIpCmBgYAoKIyMgQmFzaWMgbW9kZWwgey50YWJzZXQgLnRhYnNldC1zdGlja3l9CgpgYGB7cn0KbTEgPSBsbShzbGVlcF9yZW0gfiBzbGVlcF90b3RhbCwgZGF0YSA9IG1zbGVlcCkKcmVncmVzc2lvbl9zdW1tYXJ5KG0xKQpgYGAKCiMjIFN1cGVyLWFkdmFuY2VkIG1vZGVsIHsuYWN0aXZlIC50YWJzZXQgLnRhYnNldC1zdGlja3l9CgpgYGB7cn0KbTIgPSBsbShzbGVlcF9yZW0gfiBzbGVlcF90b3RhbCArIGxvZyhicmFpbnd0KSArIGxvZyhib2R5d3QpICsgZWF0cywgZGF0YSA9IG1zbGVlcCkKcmVncmVzc2lvbl9zdW1tYXJ5KG0yKQpgYGAK</div>
+<div id="rmd-source-code">IyBXcmFuZ2xlIGRhdGEgey50YWJzZXQgLnRhYnNldC1zdGlja3l9CgpgYGB7ciBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQpzb3VyY2UoIjBfaGVscGVycy5SIikKYGBgCgojIyBMb2FkIGRhdGEKCmBgYHtyfQptc2xlZXAgPSByZWFkUkRTKCJtc2xlZXBfcHJvY2Vzc2VkLnJkcyIpCmBgYAoKIyMgQmFzaWMgbW9kZWwgey50YWJzZXQgLnRhYnNldC1zdGlja3l9CgpgYGB7cn0KbTEgPSBsbShzbGVlcF9yZW0gfiBzbGVlcF90b3RhbCwgZGF0YSA9IG1zbGVlcCkKcmVncmVzc2lvbl9zdW1tYXJ5KG0xKQpgYGAKCiMjIFN1cGVyLWFkdmFuY2VkIG1vZGVsIHsuYWN0aXZlIC50YWJzZXQgLnRhYnNldC1zdGlja3l9CgpgYGB7cn0KbTIgPSBsbShzbGVlcF9yZW0gfiBzbGVlcF90b3RhbCArIGxvZyhicmFpbnd0KSArIGxvZyhib2R5d3QpICsgZWF0cywgZGF0YSA9IG1zbGVlcCkKcmVncmVzc2lvbl9zdW1tYXJ5KG0yKQpgYGAKCiMjIFN1bW1hcnkKCmBgYHtyfQpiaW5kX3Jvd3MoCgkiTW9kZWwgMSIgPSBnbGFuY2UobTEpLCAKCSJNb2RlbCAyIiA9IGdsYW5jZShtMiksCi5pZCA9ICJNb2RlbCIpICU+JSBhcnJhbmdlKEFJQykgJT4lIHNlbGVjdChNb2RlbCwgYWRqLnIuc3F1YXJlZCwgQklDLCBkZXZpYW5jZSwgZGYucmVzaWR1YWwpCmBgYAoK</div>
 
 
 
