@@ -21,23 +21,58 @@
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<script src="site_libs/navigation-1.1/FileSaver.min.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; } /* Keyword */
+code > span.dt { color: #dfdfbf; } /* DataType */
+code > span.dv { color: #dcdccc; } /* DecVal */
+code > span.bn { color: #dca3a3; } /* BaseN */
+code > span.fl { color: #c0bed1; } /* Float */
+code > span.ch { color: #dca3a3; } /* Char */
+code > span.st { color: #cc9393; } /* String */
+code > span.co { color: #7f9f7f; } /* Comment */
+code > span.ot { color: #efef8f; } /* Other */
+code > span.al { color: #ffcfaf; } /* Alert */
+code > span.fu { color: #efef8f; } /* Function */
+code > span.er { color: #c3bf9f; } /* Error */
+code > span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+code > span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code > span.sc { color: #dca3a3; } /* SpecialChar */
+code > span.vs { color: #cc9393; } /* VerbatimString */
+code > span.ss { color: #cc9393; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #f0dfaf; } /* ControlFlow */
+code > span.op { color: #f0efd0; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code > span.at { } /* Attribute */
+code > span.do { color: #7f9f7f; } /* Documentation */
+code > span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code > span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+div.sourceCode {
+  overflow-x: visible;
+}
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
-}
-</script>
-
 
 
 <style type="text/css">
@@ -64,6 +99,9 @@ h6 {
 }
 .table th:not([align]) {
   text-align: left;
+}
+#rmd-source-code {
+  display: none;
 }
 </style>
 
@@ -163,6 +201,7 @@ $(document).ready(function () {
 </style>
 <script>
 $(document).ready(function () {
+  window.initializeSourceEmbed("1_wrangle_data.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>
@@ -198,7 +237,13 @@ $(document).ready(function () {
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/rubenarslan/repro_web_stack">
+    <span class="fa fa-github"></span>
+     
+    
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -211,6 +256,8 @@ $(document).ready(function () {
 <ul class="dropdown-menu" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
 </ul>
 </div>
 
@@ -222,20 +269,21 @@ $(document).ready(function () {
 
 <div id="wrangle-data" class="section level1 tabset tabset-sticky">
 <h1>Wrangle data</h1>
-<pre class="r"><code>source(&quot;0_helpers.R&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;0_helpers.R&quot;</span>)</code></pre></div>
 <div id="wrangle-wrangle" class="section level2">
 <h2>Wrangle wrangle</h2>
-<pre class="r"><code>data(&quot;msleep&quot;)
-msleep %&gt;% 
-    mutate(eats = factor(recode(vore, &quot;carni&quot; = &quot;meat&quot;, &quot;omni&quot; = &quot;everything&quot;, &quot;herbi&quot; = &quot;plants&quot;, &quot;insecti&quot; = &quot;insects&quot;), c(&quot;everything&quot;,&quot;plants&quot;, &quot;insects&quot;, &quot;meat&quot;))) -&gt;
-msleep</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;msleep&quot;</span>)
+msleep %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">eats =</span> <span class="kw">factor</span>(<span class="kw">recode</span>(vore, <span class="st">&quot;carni&quot;</span> =<span class="st"> &quot;meat&quot;</span>, <span class="st">&quot;omni&quot;</span> =<span class="st"> &quot;everything&quot;</span>, <span class="st">&quot;herbi&quot;</span> =<span class="st"> &quot;plants&quot;</span>, <span class="st">&quot;insecti&quot;</span> =<span class="st"> &quot;insects&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;everything&quot;</span>,<span class="st">&quot;plants&quot;</span>, <span class="st">&quot;insects&quot;</span>, <span class="st">&quot;meat&quot;</span>))) -&gt;
+msleep</code></pre></div>
 </div>
 <div id="save-data" class="section level2">
 <h2>Save data</h2>
-<pre class="r"><code>saveRDS(msleep, file = &quot;msleep_processed.rds&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">saveRDS</span>(msleep, <span class="dt">file =</span> <span class="st">&quot;msleep_processed.rds&quot;</span>)</code></pre></div>
 </div>
 </div>
 
+<div id="rmd-source-code">LS0tCm91dHB1dDoKICBodG1sX2RvY3VtZW50OgogICAgY29kZV9mb2xkaW5nOiAic2hvdyIKLS0tCgojIFdyYW5nbGUgZGF0YSB7LnRhYnNldCAudGFic2V0LXN0aWNreX0KCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9CnNvdXJjZSgiMF9oZWxwZXJzLlIiKQpgYGAKCiMjIFdyYW5nbGUgd3JhbmdsZQoKYGBge3J9CmRhdGEoIm1zbGVlcCIpCm1zbGVlcCAlPiUgCgltdXRhdGUoZWF0cyA9IGZhY3RvcihyZWNvZGUodm9yZSwgImNhcm5pIiA9ICJtZWF0IiwgIm9tbmkiID0gImV2ZXJ5dGhpbmciLCAiaGVyYmkiID0gInBsYW50cyIsICJpbnNlY3RpIiA9ICJpbnNlY3RzIiksIGMoImV2ZXJ5dGhpbmciLCJwbGFudHMiLCAiaW5zZWN0cyIsICJtZWF0IikpKSAtPgptc2xlZXAKYGBgCgojIyBTYXZlIGRhdGEKYGBge3J9CnNhdmVSRFMobXNsZWVwLCBmaWxlID0gIm1zbGVlcF9wcm9jZXNzZWQucmRzIikKYGBgCgo=</div>
 
 
 
